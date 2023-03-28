@@ -1,15 +1,14 @@
 import React, { useState } from 'react';
 import ItemList from './ItemList';
 import ItemClass from './ItemClass';
+import { nanoid } from 'nanoid';
 
 export default function Main() {
   const [items, setItems] = useState([]);
   const [form, setForm] = useState({ content: '' });
 
-  const { nanoid } = require('nanoid');
   const ID = nanoid();
 
-  var sendIcon = '/public/send.png';
 
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -24,7 +23,7 @@ export default function Main() {
   };
 
   const loadActualItems = () => {
-    fetch(`${process.env.REACT_APP_API_URL}`)
+    fetch(`${env.REACT_APP_API_URL}`)
       .then((response) => response.json())
       .then((arr) =>
         arr.map((el) => setItems((prevItems) => [...prevItems, el]))
@@ -32,8 +31,8 @@ export default function Main() {
   };
 
   const loadItems = () => {
-    console.log(process.env.REACT_APP_API_URL);
-    fetch(`${process.env.REACT_APP_API_URL}`, {
+    console.log(env.REACT_APP_API_URL);
+    fetch(`${env.REACT_APP_API_URL}`, {
       method: 'GET',
       headers: { 'Content-Type': 'application/json;charset=utf-8' },
     })
@@ -44,7 +43,7 @@ export default function Main() {
   };
 
   const handleDelete = (id) => {
-    fetch(`${process.env.REACT_APP_API_URL}/${id}`, {
+    fetch(`${env.REACT_APP_API_URL}/${id}`, {
       method: 'DELETE',
       headers: { 'Content-Type': 'application/json;charset=utf-8' },
     })
