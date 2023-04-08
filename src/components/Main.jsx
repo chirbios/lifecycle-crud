@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
-import ItemList from './ItemList';
-import ItemClass from './ItemClass';
+import ItemList from '../components/ItemList';
+import ItemClass from '../components/ItemClass';
 import { nanoid } from 'nanoid';
 
 export default function Main() {
@@ -9,8 +9,8 @@ export default function Main() {
 
   const ID = nanoid();
 
-
   const handleSubmit = (e) => {
+    // добавление
     e.preventDefault();
     const newItem = new ItemClass(ID, form.content);
     setItems((prevItems) => [...prevItems, newItem]);
@@ -23,7 +23,8 @@ export default function Main() {
   };
 
   const loadActualItems = () => {
-    fetch(`${env.REACT_APP_API_URL}`)
+    // обновление
+    fetch(`${import.meta.env.VITE_API_KEY}`)
       .then((response) => response.json())
       .then((arr) =>
         arr.map((el) => setItems((prevItems) => [...prevItems, el]))
@@ -31,8 +32,9 @@ export default function Main() {
   };
 
   const loadItems = () => {
-    console.log(env.REACT_APP_API_URL);
-    fetch(`${env.REACT_APP_API_URL}`, {
+    // загрузка
+    console.log(import.meta.env.VITE_API_KEY);
+    fetch(`${import.meta.env.VITE_API_KEY}`, {
       method: 'GET',
       headers: { 'Content-Type': 'application/json;charset=utf-8' },
     })
@@ -41,9 +43,10 @@ export default function Main() {
         arr.map((el) => setItems((prevItems) => [...prevItems, el]))
       );
   };
-
+  console.log(import.meta.env.VITE_API_KEY)
   const handleDelete = (id) => {
-    fetch(`${env.REACT_APP_API_URL}/${id}`, {
+    // удаление
+    fetch(`${import.meta.env.VITE_API_KEY}/${id}`, {
       method: 'DELETE',
       headers: { 'Content-Type': 'application/json;charset=utf-8' },
     })
